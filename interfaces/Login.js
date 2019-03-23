@@ -12,7 +12,7 @@ class Login extends React.Component {
             <View>
                 <Text>Login</Text>
                 <Button onPress={() => this.props.navigation.navigate('Home') }>
-                    <Text>Login</Text>
+                    <Text>Home</Text>
                 </Button>
             </View>
         );

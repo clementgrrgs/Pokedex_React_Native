@@ -11,6 +11,7 @@ class Home extends React.Component {
         return (
             <View>
                 <Text>Home Page</Text>
+                <Button onPress={() => this.props.navigation.navigate('Login') }><Text>Login</Text></Button>
                 <Button onPress={() => this.props.navigation.navigate('Classement') }><Text>Classement</Text></Button>
                 <Button onPress={() => this.props.navigation.navigate('Pokedex') }><Text>Pokedex</Text></Button>
             </View>

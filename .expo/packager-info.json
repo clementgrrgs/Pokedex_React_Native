@@ -1,10 +1,10 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": null,
-  "packagerPort": null,
-  "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "expoServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 1150,
+  "expoServerNgrokUrl": "https://37-vby.anonymous.pokedex.exp.direct",
+  "packagerNgrokUrl": "https://packager.37-vby.anonymous.pokedex.exp.direct",
+  "ngrokPid": 1167,
   "webpackServerPort": null
 }
