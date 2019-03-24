@@ -3,6 +3,9 @@ import { Platform, StyleSheet, Text, View, TextInput } from 'react-native';
 import { Root } from 'native-base';
 import { createAppContainer } from 'react-navigation';
 import AppStackNavigator from './navigation/AppStackNavigator';
+import { Provider } from 'react-redux'
+import Store from './Store/configureStrore'
+
 
 export default class App extends React.Component {
     constructor(props) {
@@ -33,9 +36,11 @@ export default class App extends React.Component {
 
       if (fontsLoaded)
           return (
+              <Provider store={Store}>
                   <Root>
                       <AppContainer/>
                   </Root>
+              </Provider>
           );
       else
           return <View><Text>Loading....</Text></View>

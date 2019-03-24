@@ -1,8 +1,8 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/Cellar/yarn/1.13.0/libexec/bin/yarn.js remove react-native-gesture-handler
+  /usr/local/bin/node /usr/local/Cellar/yarn/1.13.0/libexec/bin/yarn.js add redux --save
 
 PATH: 
-  /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+  /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/clement/Documents/React/Pokedex/node_modules/.bin
 
 Yarn version: 
   1.13.0
@@ -14,7 +14,7 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: EACCES: permission denied, unlink '/Users/clement/Documents/React/Pokedex/node_modules/@babel/highlight/node_modules/ansi-styles/index.js'
+  Error: EACCES: permission denied, unlink '/Users/clement/Documents/React/Pokedex/node_modules/@babel/highlight/node_modules/ansi-styles/package.json'
 
 npm manifest: 
   {
@@ -4644,15 +4644,6 @@ Lockfile:
     integrity sha512-u90U4lf5L/PUmq7HoczFKgyElmBCpb3gu21TOWL7pq4gSH2Hz0EGm1Bgu0SQacO9v6jfQbS7JfE+xtMg6MHluQ==
     dependencies:
       lodash "4.17.11"
-  
-  react-native-gesture-handler@^1.1.0:
-    version "1.1.0"
-    resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.1.0.tgz#2a7d545ad2e0ca23adce22b2af441ad360ecccee"
-    integrity sha512-E9IKHpmL+sz/iCYkUriTUjBaQBORWV+oheYPQleADkxjo2sYsQfnlyTz4EQYFONkUwJ6WmfTNkYt2/yc5U4Ziw==
-    dependencies:
-      hoist-non-react-statics "^2.3.1"
-      invariant "^2.2.2"
-      prop-types "^15.5.10"
   
   react-native-gesture-handler@~1.0.14:
     version "1.0.17"
