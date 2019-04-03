@@ -69,7 +69,6 @@ class Home extends React.Component {
             }
             const action = {type: "ADDPOKE", value: CustomPokedex}
             this.props.dispatch(action)
-            console.log('Current State : '+ JSON.stringify(this.props.CurrentUser))
             updateUser(this.props.CurrentUser).then(() => {
                 console.log('User Updated')
             }).catch(((error) => console.error(error)));
@@ -99,7 +98,8 @@ class Home extends React.Component {
 
                         <Button style={styles.navBtn} title="Sigin" onPress={() => this.props.navigation.navigate('Sigin') }/>
                         <Button style={styles.navBtn} title="Login" onPress={() => this.props.navigation.navigate('Login') }/>
-                        <Button style={styles.navBtn} title="Pokedex" onPress={() => this.props.navigation.navigate('Pokedex') }/>
+                        <Button style={styles.navBtn} title="Pokedex" onPress={() => {
+                            this.props.navigation.navigate('Pokedex', { pokedex : this.props.CurrentUser.pokemons})} }/>
                     </View>
                 </View>
             );
@@ -118,7 +118,8 @@ class Home extends React.Component {
                     <View style={styles.footer_container}>
                         <Text>{this.props.CurrentUser.pseudo}</Text>
                         <Button style={styles.navBtn} title="Logout" onPress={() => this._logout()}/>
-                        <Button style={styles.navBtn} title="Pokedex" onPress={() => this.props.navigation.navigate('Pokedex') }/>
+                        <Button style={styles.navBtn} title="Pokedex" onPress={() => {
+                            this.props.navigation.navigate('Pokedex', { pokedex : this.props.CurrentUser.pokemons})} }/>
                     </View>
                 </View>
             );

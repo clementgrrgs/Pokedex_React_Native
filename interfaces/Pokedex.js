@@ -10,15 +10,15 @@ class Pokedex extends React.Component {
         super(props)
     }
 
-
     _displayLoading() {
-        /*if (this.props.Pokedex.length === 0) {
+        console.log("Pokedex : "+this.props.navigation.getParam('pokedex',[]))
+        if (this.props.navigation.getParam('pokedex',[]).length === 0) {
             return (
                 <View style={styles.loading_container}>
-                    <ActivityIndicator size='large' />
+                    <ActivityIndicator size='large'/>
                 </View>
             );
-        }*/
+        }
     }
 
 
@@ -27,7 +27,7 @@ class Pokedex extends React.Component {
             <View style={styles.container}>
                 <Text>Pokedex</Text>
                 <FlatList
-                    data={this.props.Pokedex}
+                    data={this.props.navigation.getParam('pokedex',[])}
                     keyExtractor={(item) => item.id.toString()}
                     renderItem={({item}) => <PokemonRow pokemon={item}/>}
                 />
@@ -62,8 +62,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
-        gotchaPokemon: state.gotchaPokemon,
-        Pokedex: state.Pokedex
+        CurrentUser : state.CurrentUser
     }
 }
 

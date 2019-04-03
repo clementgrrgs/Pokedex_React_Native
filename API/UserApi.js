@@ -38,6 +38,7 @@ export function updateUser (user) {
     const url = 'http://172.16.6.172:3000/users/'+user.pseudo;
     return fetch(url, {
         method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(user),
     })
         .then((response) => response.json())

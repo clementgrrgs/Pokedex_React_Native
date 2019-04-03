@@ -52,13 +52,11 @@ function toggleUser(state = initialUserState, action){
             nextState = {
                 ...state,
             }
-            var nombrePoke = state.CurrentUser.nbPokemon + 1;
-            nextState.CurrentUser = {
-                _id: state.CurrentUser._id,
-                pseudo: state.CurrentUser.pseudo,
-                nbPokemon: nombrePoke,
-                friends: state.CurrentUser.friends,
-                pokemons: state.CurrentUser.pokemons.push(action.value)
+            const pokemonFound = nextState.CurrentUser.pokemons.findIndex(item => item.id === action.value.id)
+            if (pokemonFound === -1){
+                var nombrePoke = state.CurrentUser.nbPokemon + 1;
+                nextState.CurrentUser.nbPokemon = nombrePoke;
+                nextState.CurrentUser.pokemons.push(action.value)
             }
             return nextState || state
         default:
