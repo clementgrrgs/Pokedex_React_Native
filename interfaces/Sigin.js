@@ -1,10 +1,10 @@
 import React from 'react'
 import { StyleSheet, View, Text, Button,TextInput } from 'react-native';
 import {connect} from 'react-redux'
-import {getSingleUser} from "../API/UserApi"
+import {createUser} from "../API/UserApi"
 import {toggleUser} from "../Store/Reducers/loginReducer";
 
-class Login extends React.Component {
+class Sigin extends React.Component {
     constructor(props) {
         super(props);
         this.pseudo = ""
@@ -14,9 +14,16 @@ class Login extends React.Component {
         this.pseudo = text
     }
 
-    _login() {
-        getSingleUser(this.pseudo).then((user) => {
-            const action = {type: "LOGIN", value: user}
+    _sigin(){
+        var NewUser = {
+            _id: "",
+            pseudo: this.pseudo.trim(),
+            nbPokemon:0,
+            friends: [],
+            pokemons: []
+        };
+        createUser(NewUser).then((user) => {
+            const action = {type: "SIGIN", value: user}
             this.props.dispatch(action)
             this.props.navigation.navigate('Home')
         }).catch(((error) => console.error(error)));
@@ -26,14 +33,14 @@ class Login extends React.Component {
     render(){
         return (
             <View style={styles.main_container}>
-                <Text>Login</Text>
+                <Text>SIGIN</Text>
                 <View style={styles.content_container}>
                     <TextInput
                         style={styles.textinput}
-                        placeholder='Enter pseudo here'
+                        placeholder='Enter your pseudo here'
                         onChangeText={(text) => this._searchTextInputChanged(text)}
                     />
-                    <Button title='Login' onPress={() => this._login()}/>
+                    <Button title='Sig In' onPress={() => this._sigin()}/>
                 </View>
                 <View style={styles.footer_container}>
                     <Button style={styles.navBtn} title='Home' onPress={() => this.props.navigation.navigate('Home') }/>
@@ -81,4 +88,4 @@ const mapStateToProps = (state) => {
 
 
 
-export default connect(mapStateToProps)(Login);
+export default connect(mapStateToProps)(Sigin);

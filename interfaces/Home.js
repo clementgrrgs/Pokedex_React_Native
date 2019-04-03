@@ -1,14 +1,21 @@
 import React from 'react'
 import { StyleSheet, View, Text, Button,TextInput } from 'react-native';
-import { connect } from 'react-redux'
-import {getFullPokedex} from "../API/PokeApi";
-import {getSinglePokemon} from "../API/SinglePokemonApi";
+import { connect } from 'react-redux';
+import {getFullPokedex, getSinglePokemon} from "../API/PokeApi";
+import {updateUser} from "../API/UserApi";
+import toggleGotcha from "../Store/Reducers/gotchaReducer";
+import toggleUser from "../Store/Reducers/loginReducer";
 
 class Home extends React.Component {
     constructor(props) {
         super(props)
         this.name_search = ""
-        this.Pokedex = []
+    }
+
+
+    componentDidUpdate() {
+        console.log('ComponentDidUpdate')
+        console.log(this.props.CurrentUser)
     }
 
 
@@ -17,24 +24,22 @@ class Home extends React.Component {
 
     }
 
-    _togglePokedex(Pokedex){
+    /*_togglePokedex(Pokedex){
         const action = {type: "GET_POKEDEX", value: Pokedex}
         this.props.dispatch(action)
-    }
+    }*/
 
-    _buildPokemon(){
+    /*_buildPokemon(){
         getFullPokedex().then(data => {
             let pokedex = data.pokemon_entries;
             let CustomPokedex = []
-            pokedex.forEach((pokemon) => {
+            pokedex.forEach((pokemon,index) => {
                 getSinglePokemon(pokemon.entry_number).then(singlePokemon => {
                     var typesCurrentPokemon = "";
                     singlePokemon.types.forEach((tip) => {
                         typesCurrentPokemon += tip.type.name.toUpperCase()+"  "
                     });
-
-
-                    CustomPokedex.push({
+                    CustomPokedex.splice(index,0,{
                         id : pokemon.entry_number,
                         img : singlePokemon.sprites.front_default,
                         name : pokemon.pokemon_species.name.toUpperCase(),
@@ -45,40 +50,86 @@ class Home extends React.Component {
                 this._togglePokedex(CustomPokedex)
             });
         }).catch(((error) => console.error(error)));
-    }
+    }*/
 
 
 
     _toggleCatch () {
-        const action = {type: "GOTCHA_POKEMON", value: this.name_search}
+        let CustomPokedex;
+        getSinglePokemon(this.name_search).then(singlePokemon => {
+            var typesCurrentPokemon = "";
+            singlePokemon.types.forEach((tip) => {
+                typesCurrentPokemon += tip.type.name.toUpperCase()+"  "
+            });
+            CustomPokedex = {
+                id : singlePokemon.id,
+                img : singlePokemon.sprites.front_default,
+                name : singlePokemon.name.toUpperCase(),
+                type : typesCurrentPokemon
+            }
+            const action = {type: "ADDPOKE", value: CustomPokedex}
+            this.props.dispatch(action)
+            console.log('Current State : '+ JSON.stringify(this.props.CurrentUser))
+            updateUser(this.props.CurrentUser).then(() => {
+                console.log('User Updated')
+            }).catch(((error) => console.error(error)));
+        }).catch(((error) => console.error(error)));
+    }
+
+    _logout(){
+        const action = {type: "LOGOUT", value: ""}
         this.props.dispatch(action)
     }
 
 
+    _display(){
+        if (this.props.CurrentUser.pseudo === "") {
+            return (
+                <View style={styles.main_container}>
+                    <Text>Home Page</Text>
+                    <View style={styles.content_container}>
+                        <TextInput
+                            style={styles.textinput}
+                            placeholder='Pokemon Name'
+                            onChangeText={(text) => this._searchTextInputChanged(text)}
+                        />
+                        <Button title='GOTCHA' onPress={() => this._toggleCatch()}/>
+                    </View>
+                    <View style={styles.footer_container}>
 
-    _NavPokedex() {
-        this._buildPokemon()
-        this.props.navigation.navigate('Pokedex')
+                        <Button style={styles.navBtn} title="Sigin" onPress={() => this.props.navigation.navigate('Sigin') }/>
+                        <Button style={styles.navBtn} title="Login" onPress={() => this.props.navigation.navigate('Login') }/>
+                        <Button style={styles.navBtn} title="Pokedex" onPress={() => this.props.navigation.navigate('Pokedex') }/>
+                    </View>
+                </View>
+            );
+        } else {
+            return (
+                <View style={styles.main_container}>
+                    <Text>Home Page</Text>
+                    <View style={styles.content_container}>
+                        <TextInput
+                            style={styles.textinput}
+                            placeholder='Pokemon Name'
+                            onChangeText={(text) => this._searchTextInputChanged(text)}
+                        />
+                        <Button title='GOTCHA' onPress={() => this._toggleCatch()}/>
+                    </View>
+                    <View style={styles.footer_container}>
+                        <Text>{this.props.CurrentUser.pseudo}</Text>
+                        <Button style={styles.navBtn} title="Logout" onPress={() => this._logout()}/>
+                        <Button style={styles.navBtn} title="Pokedex" onPress={() => this.props.navigation.navigate('Pokedex') }/>
+                    </View>
+                </View>
+            );
+        }
     }
-
 
 
     render() {
         return (
             <View style={styles.main_container}>
-                <Text>Home Page</Text>
-                <View style={styles.content_container}>
-                    <TextInput
-                        style={styles.textinput}
-                        placeholder='Pokemon Name'
-                        onChangeText={(text) => this._searchTextInputChanged(text)}
-                    />
-                    <Button title='GOTCHA' onPress={() => this._toggleCatch()}/>
-                </View>
-                <View style={styles.footer_container}>
-                    <Button style={styles.navBtn} title="Profile" onPress={() => this.props.navigation.navigate('Classement') }/>
-                    <Button style={styles.navBtn} title="Pokedex" onPress={() => this._NavPokedex() }/>
-                </View>
+                {this._display()}
             </View>
         );
     }
@@ -117,9 +168,11 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
-        gotchaPokemon: state.gotchaPokemon,
-        Pokedex : state.Pokedex
+        CurrentUser: state.CurrentUser
     }
 }
+
+
+
 
 export default connect(mapStateToProps)(Home);

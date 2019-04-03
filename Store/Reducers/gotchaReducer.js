@@ -1,19 +1,24 @@
-
-const initialState = {
-    Pokedex: []
+const initialUserState = {
+    CurrentUser : {
+        _id: "",
+        pseudo: "",
+        nbPokemon:0,
+        friends: [],
+        pokemons: []
+    }
 }
 
 
-function toggleGotcha(state = initialState, action){
+function toggleGotcha(state = initialPokemonState, action){
     let nextState
     switch (action.type) {
         case 'GOTCHA_POKEMON':
-            const catchPokemon = state.Pokedex.findIndex(item => item.name.toUpperCase().trim() === action.value.toUpperCase().trim())
+            const catchPokemon = state.CurrentUser.pokemons.findIndex(item => item.name.toUpperCase().trim() === action.value.toUpperCase().trim())
             if (catchPokemon !== -1) {
                 nextState = {
                     ...state,
                 }
-                nextState.Pokedex[catchPokemon].isDiscover = true;
+                nextState.CurrentUser.pokemons.push();
             }
             return nextState || state
         case 'GET_POKEDEX':

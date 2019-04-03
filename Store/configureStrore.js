@@ -1,5 +1,6 @@
 import {createStore} from "redux";
-import toggleGotcha from './Reducers/gotchaReducer'
+//import reducer from './Reducers/reducers'
+import toggleUser from './Reducers/loginReducer'
 
 
-export default createStore(toggleGotcha)
+export default createStore(toggleUser)
