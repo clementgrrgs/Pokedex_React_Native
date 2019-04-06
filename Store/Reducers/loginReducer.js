@@ -56,7 +56,7 @@ function toggleUser(state = initialUserState, action){
             if (pokemonFound === -1){
                 var nombrePoke = state.CurrentUser.nbPokemon + 1;
                 nextState.CurrentUser.nbPokemon = nombrePoke;
-                nextState.CurrentUser.pokemons.push(action.value)
+                nextState.CurrentUser.pokemons.splice(action.value.id -1 ,1,action.value)
             }
             return nextState || state
         default:

@@ -11,7 +11,7 @@ class Pokedex extends React.Component {
     }
 
     _displayLoading() {
-        console.log("Pokedex : "+this.props.navigation.getParam('pokedex',[]))
+        console.log("Pokedex : "+JSON.stringify(this.props.navigation.getParam('pokedex',[])))
         if (this.props.navigation.getParam('pokedex',[]).length === 0) {
             return (
                 <View style={styles.loading_container}>
@@ -28,7 +28,7 @@ class Pokedex extends React.Component {
                 <Text>Pokedex</Text>
                 <FlatList
                     data={this.props.navigation.getParam('pokedex',[])}
-                    keyExtractor={(item) => item.id.toString()}
+                    keyExtractor={(item) => this.props.navigation.getParam('pokedex',[]).indexOf(item).toString()}
                     renderItem={({item}) => <PokemonRow pokemon={item}/>}
                 />
                 {this._displayLoading()}

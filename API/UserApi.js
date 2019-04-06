@@ -1,6 +1,9 @@
 
+const localhost = '192.168.1.48';
+
+
 export function getUsers () {
-    const url = 'http://172.16.6.172:3000/users';
+    const url = 'http://'+localhost+':3000/users';
     return fetch(url)
         .then((response) => response.json())
         .catch(((error) => console.error(error)))
@@ -10,7 +13,7 @@ export function getUsers () {
 
 
 export function createUser (user) {
-    const url = 'http://172.16.6.172:3000/users';
+    const url = 'http://'+localhost+':3000/users';
     return fetch(url, {
         method: 'POST',
         headers: {
@@ -26,7 +29,7 @@ export function createUser (user) {
 
 
 export function getSingleUser (pseudo) {
-    const url = 'http://172.16.6.172:3000/users/'+pseudo;
+    const url = 'http://'+localhost+':3000/users/'+pseudo;
     return fetch(url)
         .then((response) => response.json())
         .catch(((error) => console.error(error)))
@@ -35,7 +38,7 @@ export function getSingleUser (pseudo) {
 
 
 export function updateUser (user) {
-    const url = 'http://172.16.6.172:3000/users/'+user.pseudo;
+    const url = 'http://'+localhost+':3000/users/'+user.pseudo;
     return fetch(url, {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},

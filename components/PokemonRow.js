@@ -12,10 +12,10 @@ export default class PokemonRow extends React.Component {
 
     _displayUnknown () {
         const pokemon = this.props.pokemon
-        if (pokemon.name === null){
+        if (typeof pokemon === "number"){
             return (
                 <View style={styles.unknownContainer}>
-                    <Text style={styles.unknownText}>#{pokemon.id}</Text>
+                    <Text style={styles.unknownText}>#{pokemon}</Text>
                 </View>
             )
         }
@@ -24,7 +24,7 @@ export default class PokemonRow extends React.Component {
 
     _displayKnown () {
         const pokemon = this.props.pokemon
-        if (pokemon.name !== null) {
+        if (typeof pokemon === 'object') {
             return (
                 <View style={styles.main_container}>
                     <Image

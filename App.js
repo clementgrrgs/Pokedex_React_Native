@@ -34,6 +34,7 @@ export default class App extends React.Component {
 
   render() {
     const AppContainer = createAppContainer(AppStackNavigator);
+
     const fontsLoaded = this.state.fontsLoaded;
 
       if (fontsLoaded)

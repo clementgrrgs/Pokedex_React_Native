@@ -13,7 +13,9 @@ const AppStackNavigator = createStackNavigator({
     Sigin,
     Home
 }, {
-    initialRouteName: 'Home'
+    initialRouteName: 'Home',
+    headerMode:'none',
 });
+
 
 export default AppStackNavigator;

@@ -1,5 +1,6 @@
 import React from 'react'
-import { StyleSheet, View, Text, Button,TextInput } from 'react-native';
+import {StyleSheet, View, TextInput, ImageBackground} from 'react-native';
+import {Text, Button, Image} from 'react-native-elements';
 import {connect} from 'react-redux'
 import {getSingleUser} from "../API/UserApi"
 import {toggleUser} from "../Store/Reducers/loginReducer";
@@ -25,18 +26,20 @@ class Login extends React.Component {
 
     render(){
         return (
-            <View style={styles.main_container}>
-                <Text>Login</Text>
-                <View style={styles.content_container}>
-                    <TextInput
-                        style={styles.textinput}
-                        placeholder='Enter pseudo here'
-                        onChangeText={(text) => this._searchTextInputChanged(text)}
-                    />
-                    <Button title='Login' onPress={() => this._login()}/>
+            <View style={styles.bck}>
+                <View style={styles.main_container}>
+                    <Text h1 style={styles.h1Style} >LOG IN</Text>
+                    <View style={styles.content_container}>
+                        <TextInput
+                            style={styles.textinput}
+                            placeholder='Enter your pseudo here'
+                            onChangeText={(text) => this._searchTextInputChanged(text)}
+                        />
+                        <Button buttonStyle={styles.actBTN} title='Log In' onPress={() => this._login()}/>
+                    </View>
                 </View>
                 <View style={styles.footer_container}>
-                    <Button style={styles.navBtn} title='Home' onPress={() => this.props.navigation.navigate('Home') }/>
+                    <Button buttonStyle={styles.navBtn} title='Home' onPress={() => this.props.navigation.navigate('Home') }/>
                 </View>
             </View>
         );
@@ -44,6 +47,11 @@ class Login extends React.Component {
 }
 
 const styles = StyleSheet.create({
+    bck : {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent:'space-between'
+    },
     main_container: {
         flex: 1,
         marginTop: 20,
@@ -51,26 +59,35 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         alignItems: 'center',
     },
+    h1Style : {
+        color: '#1f89dc',
+        marginTop: 60,
+    },
     textinput: {
         marginLeft: 5,
         marginRight: 5,
         height: 50,
-        borderColor: '#000000',
-        borderWidth: 1,
+        width:200,
+        borderColor: '#1f89dc',
+        borderWidth: 2,
+        borderRadius:3,
         paddingLeft: 5
     },
     content_container:{
-
-    },
-    footer_container: {
-        flexDirection: 'row',
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
         alignItems: 'center',
-        justifyContent: 'space-around',
+    },
+    actBTN:{
+        width:200,
+        marginTop:10,
     },
     navBtn: {
-        margin:'2px',
+        borderRadius: 0,
     }
 })
+
 
 
 const mapStateToProps = (state) => {
