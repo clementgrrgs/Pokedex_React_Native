@@ -1,6 +1,6 @@
 import React from 'react'
-import {StyleSheet, View, TextInput, ImageBackground} from 'react-native';
-import {Text, Button, Image} from 'react-native-elements';
+import {StyleSheet, View, TextInput, Image} from 'react-native';
+import {Text, Button} from 'react-native-elements';
 import {connect} from 'react-redux'
 import {createUser} from "../API/UserApi"
 import {toggleUser} from "../Store/Reducers/loginReducer";
@@ -30,7 +30,7 @@ class Sigin extends React.Component {
         createUser(NewUser).then((user) => {
             const action = {type: "SIGIN", value: user}
             this.props.dispatch(action)
-            this.props.navigation.navigate('Home')
+            this.props.navigation.navigate('Reception')
         }).catch(((error) => console.error(error)));
     }
 
@@ -39,14 +39,21 @@ class Sigin extends React.Component {
         return (
             <View style={styles.bck}>
                 <View style={styles.main_container}>
-                    <Text h1 style={styles.h1Style} >SIGN IN</Text>
+                    <Text h1 style={styles.h1Style} >SIG IN</Text>
                     <View style={styles.content_container}>
-                        <TextInput
-                            style={styles.textinput}
-                            placeholder='Enter your pseudo here'
-                            onChangeText={(text) => this._searchTextInputChanged(text)}
-                        />
-                        <Button buttonStyle={styles.actBTN} title='Sig In' onPress={() => this._sigin()}/>
+                        <View style={styles.IconText_container}>
+                            <Image
+                                style={styles.imgText}
+                                source={require('../img/Icon/pokemon-trainer.png')}
+                            />
+                            <TextInput
+                                style={styles.textinput}
+                                placeholder='Enter your pseudo here'
+                                onChangeText={(text) => this._searchTextInputChanged(text)}
+                            />
+                        </View>
+
+                        <Button buttonStyle={styles.actBTN} title='Log In' onPress={() => this._sigin()}/>
                     </View>
                 </View>
                 <View style={styles.footer_container}>
@@ -64,7 +71,7 @@ const styles = StyleSheet.create({
         justifyContent:'space-between'
     },
     main_container: {
-        flex: 1,
+        flex: .7,
         marginTop: 20,
         flexDirection: 'column',
         justifyContent: 'space-around',
@@ -80,15 +87,27 @@ const styles = StyleSheet.create({
         height: 50,
         width:200,
         borderColor: '#1f89dc',
-        borderWidth: 2,
+        borderBottomWidth: 2,
         borderRadius:3,
         paddingLeft: 5
     },
     content_container:{
-        flex: 1,
+        flex: .6,
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    IconText_container:{
+        margin:5,
+        flex:.5,
+        flexDirection: "row",
+        justifyContent: "space-around",
+        alignItems: "baseline",
+    },
+    imgText:{
+        margin: 5,
+        width: 40,
+        height:40,
     },
     actBTN:{
         width:200,

@@ -1,6 +1,7 @@
 import React from 'react'
-import {View, Text} from "native-base"
-import {Button, FlatList, StyleSheet ,ActivityIndicator} from "react-native";
+import {View} from "native-base"
+import {Button, FlatList, StyleSheet} from "react-native";
+import {Text} from 'react-native-elements';
 import PokemonRow from "../components/PokemonRow"
 import { connect } from 'react-redux'
 
@@ -10,29 +11,19 @@ class Pokedex extends React.Component {
         super(props)
     }
 
-    _displayLoading() {
-        console.log("Pokedex : "+JSON.stringify(this.props.navigation.getParam('pokedex',[])))
-        if (this.props.navigation.getParam('pokedex',[]).length === 0) {
-            return (
-                <View style={styles.loading_container}>
-                    <ActivityIndicator size='large'/>
-                </View>
-            );
-        }
-    }
-
-
     render() {
         return (
             <View style={styles.container}>
-                <Text>Pokedex</Text>
+                <View style={styles.title_container}>
+                    <Text h2 style={styles.h2Style}>POKÉDEX</Text>
+                </View>
                 <FlatList
+                    style={styles.listStyle}
                     data={this.props.navigation.getParam('pokedex',[])}
                     keyExtractor={(item) => this.props.navigation.getParam('pokedex',[]).indexOf(item).toString()}
                     renderItem={({item}) => <PokemonRow pokemon={item}/>}
                 />
-                {this._displayLoading()}
-                <Button title='Home' onPress={() => this.props.navigation.navigate('Home') }/>
+                <Button title='Home' style={styles.btn} onPress={() => this.props.navigation.navigate('Reception') }/>
             </View>
         )
     }
@@ -41,6 +32,7 @@ class Pokedex extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        flexDirection:"column",
         paddingTop: 22,
     },
     item: {
@@ -48,14 +40,22 @@ const styles = StyleSheet.create({
         fontSize: 18,
         height: 44,
     },
-    loading_container: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 100,
-        bottom: 0,
-        alignItems: 'center',
-        justifyContent: 'center',
+    title_container:{
+        margin:10,
+        height: 105,
+        flex:.1,
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    listStyle:{
+        flex:1,
+    },
+    btn:{
+      flex:.1,
+    },
+    h2Style:{
+        color: '#125181'
     }
 })
 

@@ -63,7 +63,7 @@ export default class PokemonRow extends React.Component {
 
 const styles = StyleSheet.create({
     unknownContainer: {
-        height:150,
+        height:100,
         borderBottomWidth: 1,
         borderTopWidth: 1,
         borderColor: '#ccc',
@@ -78,15 +78,15 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     main_container: {
-        height: 150,
+        height: 100,
         flexDirection: 'row',
         borderBottomWidth: 1,
         borderTopWidth: 1,
         borderColor: '#ccc',
     },
     image: {
-        width: 120,
-        height: 140,
+        width: 80,
+        height: 90,
         margin: 5,
         backgroundColor: 'white'
     },
@@ -104,7 +104,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 30,
         flexWrap: 'wrap',
-        paddingRight: 5
+        paddingRight: 5,
+        color:"#125181",
     },
     poke_type: {
         fontSize: 16,
