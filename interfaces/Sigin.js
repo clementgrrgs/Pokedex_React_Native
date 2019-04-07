@@ -1,8 +1,8 @@
 import React from 'react'
-import {StyleSheet, View, TextInput, Image} from 'react-native';
+import {StyleSheet, View, TextInput, Image,Alert} from 'react-native';
 import {Text, Button} from 'react-native-elements';
 import {connect} from 'react-redux'
-import {createUser} from "../API/UserApi"
+import {createUser, getUsers} from "../API/UserApi"
 import {toggleUser} from "../Store/Reducers/loginReducer";
 
 class Sigin extends React.Component {
@@ -11,27 +11,46 @@ class Sigin extends React.Component {
         this.pseudo = ""
     }
 
+
+    componentDidUpdate() {
+        console.log('ComponentDidUpdate')
+        console.log(this.props.CurrentUser)
+    }
+
     _searchTextInputChanged(text){
         this.pseudo = text
     }
 
     _sigin(){
-        var NewUser = {
-            _id: "",
-            pseudo: this.pseudo.trim(),
-            nbPokemon:0,
-            friends: [],
-            pokemons: []
-        };
-        for (var i = 0; i<151; i++){
-            NewUser.pokemons[i]= i+1;
-        }
+        getUsers().then((listUser) => {
+            if (listUser.findIndex( item => item.pseudo === this.pseudo)){
+                var NewUser = {
+                    _id: "",
+                    pseudo: this.pseudo.trim(),
+                    nbPokemon:0,
+                    friends: [],
+                    pokemons: []
+                };
+                for (var i = 0; i<151; i++){
+                    NewUser.pokemons[i]= i+1;
+                }
 
-        createUser(NewUser).then((user) => {
-            const action = {type: "SIGIN", value: user}
-            this.props.dispatch(action)
-            this.props.navigation.navigate('Reception')
-        }).catch(((error) => console.error(error)));
+                createUser(NewUser).then((user) => {
+                    const action = {type: "SIGIN", value: user}
+                    this.props.dispatch(action)
+                    this.props.navigation.navigate('Reception')
+                }).catch(((error) => console.error(error)));
+            }else{
+                Alert.alert(
+                    'SigIn Error',
+                    'Pseudo already exist, please choose another one',
+                    [
+                        {text: 'OK', onPress: () => console.log('OK Pressed')},
+                    ],
+                    {cancelable: false},
+                );
+            }
+        }).catch((error) => console.error(error));
     }
 
 
@@ -53,7 +72,7 @@ class Sigin extends React.Component {
                             />
                         </View>
 
-                        <Button buttonStyle={styles.actBTN} title='Log In' onPress={() => this._sigin()}/>
+                        <Button buttonStyle={styles.actBTN} title='Sig In' onPress={() => this._sigin()}/>
                     </View>
                 </View>
                 <View style={styles.footer_container}>

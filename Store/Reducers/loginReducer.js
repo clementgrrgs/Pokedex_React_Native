@@ -27,13 +27,13 @@ function toggleUser(state = initialUserState, action){
         case 'SIGIN':
             nextState = {
                 ...state,
-            }
-            nextState.CurrentUser = {
-                _id: action.value._id,
-                pseudo : action.value.pseudo,
-                nbPokemon : action.value.nbPokemon,
-                friends : action.value.friends,
-                pokemons : action.value.pokemons
+                CurrentUser : {
+                    _id: action.value._id,
+                    pseudo : action.value.pseudo,
+                    nbPokemon : action.value.nbPokemon,
+                    friends : action.value.friends,
+                    pokemons : action.value.pokemons
+                }
             }
             return nextState || state
         case 'LOGOUT':

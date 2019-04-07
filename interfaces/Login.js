@@ -1,5 +1,5 @@
 import React from 'react'
-import {StyleSheet, View, TextInput, Image} from 'react-native';
+import {StyleSheet, View, TextInput, Image,Alert} from 'react-native';
 import {Text, Button} from 'react-native-elements';
 import {connect} from 'react-redux'
 import {getSingleUser} from "../API/UserApi"
@@ -11,16 +11,45 @@ class Login extends React.Component {
         this.pseudo = ""
     }
 
+    componentDidUpdate() {
+        console.log('ComponentDidUpdate')
+        console.log(this.props.CurrentUser)
+    }
+
     _searchTextInputChanged(text){
         this.pseudo = text
     }
 
     _login() {
-        getSingleUser(this.pseudo).then((user) => {
-            const action = {type: "LOGIN", value: user}
-            this.props.dispatch(action)
-            this.props.navigation.navigate('Reception')
-        }).catch(((error) => console.error(error)));
+        if (this.pseudo !== ""){
+            getSingleUser(this.pseudo).then((user) => {
+                if (user.length !== 0){
+                    const action = {type: "LOGIN", value: user}
+                    this.props.dispatch(action)
+                    this.props.navigation.navigate('Reception')
+                }else{
+                    Alert.alert(
+                        'Login Error',
+                        'This pseudo doesn\'t exist',
+                        [
+                            {text: 'OK', onPress: () => console.log('OK Pressed')},
+                        ],
+                        {cancelable: false},
+                    );
+                }
+
+            }).catch(((error) => console.error(error)));
+        }else{
+            Alert.alert(
+                'Login Error',
+                'Pseudo field must be fill',
+                [
+                    {text: 'OK', onPress: () => console.log('OK Pressed')},
+                ],
+                {cancelable: false},
+            );
+        }
+
     }
 
 

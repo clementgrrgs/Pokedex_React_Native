@@ -12,6 +12,6 @@ export function getSinglePokemon (name) {
     const url = 'https://pokeapi.co/api/v2/pokemon/'+name.trim().toLowerCase()+'/';
     return fetch(url)
         .then((response) => response.json())
-        .catch(((error) => console.error(error)))
+        .catch(((error) => console.log(error)))
 }
 

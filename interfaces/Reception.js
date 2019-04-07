@@ -1,5 +1,5 @@
 import React from 'react'
-import {StyleSheet, View, TextInput, Image, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, TextInput, Image, TouchableOpacity,Alert} from 'react-native';
 import { Text } from 'react-native-elements';
 import { connect } from 'react-redux';
 import {getSinglePokemon} from "../API/PokeApi";
@@ -26,21 +26,33 @@ class Reception extends React.Component {
     _toggleCatch () {
         let CustomPokedex;
         getSinglePokemon(this.name_search).then(singlePokemon => {
-            var typesCurrentPokemon = "";
-            singlePokemon.types.forEach((tip) => {
-                typesCurrentPokemon += tip.type.name.toUpperCase()+"  "
-            });
-            CustomPokedex = {
-                id : singlePokemon.id,
-                img : singlePokemon.sprites.front_default,
-                name : singlePokemon.name.toUpperCase(),
-                type : typesCurrentPokemon
+            if (singlePokemon !== undefined){
+                var typesCurrentPokemon = "";
+                singlePokemon.types.forEach((tip) => {
+                    typesCurrentPokemon += tip.type.name.toUpperCase()+"  "
+                });
+                CustomPokedex = {
+                    id : singlePokemon.id,
+                    img : singlePokemon.sprites.front_default,
+                    name : singlePokemon.name.toUpperCase(),
+                    type : typesCurrentPokemon
+                }
+                const action = {type: "ADDPOKE", value: CustomPokedex}
+                this.props.dispatch(action)
+                updateUser(this.props.CurrentUser).then(() => {
+                    this.props.navigation.navigate('Pokedex', { pokedex : this.props.CurrentUser.pokemons})
+                }).catch(((error) => console.error(error)));
+            }else{
+                Alert.alert(
+                    'Pokemon not Found',
+                    'Too bad '+ this.name_search +' it\'s not yet a Pokemon !!!',
+                    [
+                        {text: 'Try Again', onPress: () => console.log('Try Pressed')},
+                    ],
+                    {cancelable: false},
+                );
             }
-            const action = {type: "ADDPOKE", value: CustomPokedex}
-            this.props.dispatch(action)
-            updateUser(this.props.CurrentUser).then(() => {
-                this.props.navigation.navigate('Pokedex', { pokedex : this.props.CurrentUser.pokemons})
-            }).catch(((error) => console.error(error)));
+
         }).catch(((error) => console.error(error)));
     }
 
